@@ -37,7 +37,7 @@ def handle_client(conn, addr): #Handles individual connections between Client an
                 connected = False
 
             print(f"[{addr}] {msg}")  # Outputs the address and the message.
-            conn.send("Msg received".encode(FORMAT))
+            conn.send("Msg received".encode(FORMAT)) #Server sends message BACK to client.
 
     conn.close() #Ends the connection upon the user's request.
 
