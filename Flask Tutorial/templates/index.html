@@ -1,22 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>HomePage | TechWithTim Tutorial</title>
-    </head>
-
-    <body>
-        <h1>This is the HomePage</h1>
-        <p>Hello There {{content}}</p>
-        <p>{{r}}</p>
-        {% for x in range(0,10)%}
-            {% if x%2 == 1%}
-                <p>{{x}}</p>
-            {% endif %}
-        {% endfor %}
-
-        <h3>Looping through words:</h3>
-        {% for word in content %}
-            <p>{{word}}</p>
-        {% endfor%}
-    </body>
-</html>
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %} <!-- Space sensitive!!-->
+{% block content %}
+<h1>Content Goes Here</h1>
+<p>This is a Test</p>
+{% endblock %}
