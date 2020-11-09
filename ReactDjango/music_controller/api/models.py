@@ -4,6 +4,7 @@ import random #Allows us to randomly generate codes.
 
 def generate_unique_code():
     length = 6 #Arbritary.
+    
     while True: #Always.
         """
             Generates a random code of K length.

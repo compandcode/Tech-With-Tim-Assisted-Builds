@@ -1,6 +1,6 @@
 #Takes the model (Room) in Python and converts it to a JSON response.
 from rest_framework import serializers
-from .model import Room
+from .models import Room
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
