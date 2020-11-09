@@ -30,12 +30,14 @@ def handle_client(conn, addr): #Handles individual connections between Client an
     while connected:
         #Wait to recieve information from client.
         msg_length = conn.recv(HEADER).decode(FORMAT) #Stores the length of the 1st message. Converts from Byte to String.
-        msg_length = int(msg_length) #Converts to integer (length)
-        msg = conn.recv(msg_length).decode(FORMAT) #Puts the length as the number of bytes.
-        if msg == DISCONNECT_MESSAGE: #If the user wants to disconnect.
-            connected = False
+        if msg_length:       
+            msg_length = int(msg_length) #Converts to integer (length)
+            msg = conn.recv(msg_length).decode(FORMAT) #Puts the length as the number of bytes.
+            if msg == DISCONNECT_MESSAGE: #If the user wants to disconnect.
+                connected = False
 
-        print(f"[{addr} {msg}]") #Outputs the address and the message.
+            print(f"[{addr}] {msg}")  # Outputs the address and the message.
+            conn.send("Msg received".encode(FORMAT))
 
     conn.close() #Ends the connection upon the user's request.
 
