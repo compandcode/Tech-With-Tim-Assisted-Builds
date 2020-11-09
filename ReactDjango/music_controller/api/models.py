@@ -1,8 +1,25 @@
-from django.db import models
+from django.db import models #Allows us to create a Django DB.
+import string #Allows us to access ASCII.
+import random #Allows us to randomly generate codes.
+
+def generate_unique_code():
+    length = 6 #Arbritary.
+    while True: #Always.
+        """
+            Generates a random code of K length.
+            Only contains the UPPERCASE Ascii characters.
+            Joins it to a string that's initially blank,
+        """
+        code="".join(random.choices(string.ascii_uppercase, k=length))
+        if Room.objects.filter(code=code) == 0: #If they're different.
+            break #Stop generating.
+    return code#Return the code to the function.
+
+
 # Create your models here.
 # A model is a table in Python and converts it to a Database.
 
-#Django Rule: Fat models, thin views,
+#Django Rule: Fat models, thin views. Majority of logic should go on models.
 
 
 class Room(models.Model):  # The Room is going to be a model.
