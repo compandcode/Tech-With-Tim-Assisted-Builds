@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("",main)
+    path('admin/', admin.site.urls)
     #path('api/', include('api.urls')) ##Send the rest of the URL to the other file.
 ]
