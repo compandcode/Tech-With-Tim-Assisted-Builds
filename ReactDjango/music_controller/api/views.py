@@ -3,6 +3,12 @@ from rest_framework import generics
 from .serializers import RoomSerializer
 from .models import Room
 
+"""
+To Run, Type this in the terminal: 
+    cd music_controller
+    python .\manage.py runserver
+    Go to api/room .
+"""
 # Create your views here. (Endpoints).
 # Note: Both Functions and Classes can be used as views.
 
