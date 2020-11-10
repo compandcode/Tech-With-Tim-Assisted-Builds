@@ -1,8 +1,10 @@
 from flask import Flask, redirect, url_for, render_template, request, session
+from datetime import timedelta #For sessions.
 #Focussing on Bootstrap and Template Inheritance.
 
 app = Flask(__name__)
 app.secret_key = "DUMMY" #Secret key for encryption. In reality it needs to be secure..
+app.permanent_session_lifetime = timedelta(days=7) #Sets the 'Permenant Session' lifetime to 7 days and then delete it after.
 
 @app.route("/")
 def home():
@@ -16,6 +18,8 @@ def test():
 @app.route("/login", methods=["POST","GET"]) #Methods we can use on the login page.
 def login():
     if request.method == "POST":
+        session.permenant = True #Sets it to the Constant's value.
+
         #Get the information and send the user to the user's page.
         user = request.form["nm"] #Dictionary key from the form.
         session["user"] = user #Basic data for session, as a dictionary key and value.
