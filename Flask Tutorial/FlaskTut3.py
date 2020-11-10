@@ -1,10 +1,14 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta #For sessions.
+#from sql_alchemy import SQLAlchemy
 #Focussing on Bootstrap and Template Inheritance.
 
 app = Flask(__name__)
 app.secret_key = "DUMMY" #Secret key for encryption. In reality it needs to be secure..
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://users.sqlite3'
 app.permanent_session_lifetime = timedelta(days=7) #Sets the 'Permenant Session' lifetime to 7 days and then delete it after.
+
+#db = SQLAlchemy(app)
 
 @app.route("/")
 def home():
@@ -30,12 +34,23 @@ def login():
             return redirect(url_for("user")) #Take them to their page 
         return render_template("login.html") #Means we didn't click the submit button.
 
-@app.route("/user")
+@app.route("/user", methods=["POST","GET"])
 def user():
+    email = None
+
     if "user" in session: #If the user is logged in (there's a session?):
         user = session["user"] #Store the user in a variable.
+        
+        if request.method == "POST":
+            email = request.form["email"]
+            session["email"] = email
+            flash("email saved!!")
+        else:
+            if "email" in session:
+                email = session["email"] #Gets the email from the session instead.
+       
         #Display it to the user.
-        return render_template("user.html", user=user)
+        return render_template("user.html", email=email)
     else: #If there's no session (no user).
         flash("You Are Not Logged In!!")
         return redirect(url_for("login"))
@@ -47,6 +62,7 @@ def logout():
         user = session["user"]  # Store the user in a variable.
         flash(f"{user} Logged Out Successfully", category="info")
     session.pop("user", None) #Removes session data.
+    session.pop("email", None)
     return redirect(url_for("login"))
 
 if __name__ == "__main__":
