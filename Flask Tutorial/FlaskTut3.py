@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, render_template, request, session
+from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta #For sessions.
 #Focussing on Bootstrap and Template Inheritance.
 
@@ -19,13 +19,14 @@ def test():
 def login():
     if request.method == "POST":
         session.permenant = True #Sets it to the Constant's value.
-
+        flash("Login Successful")
         #Get the information and send the user to the user's page.
         user = request.form["nm"] #Dictionary key from the form.
         session["user"] = user #Basic data for session, as a dictionary key and value.
         return redirect(url_for("user"))
     else:
         if "user" in session: #If they've signed in.
+            flash("Already Logged In !!")
             return redirect(url_for("user")) #Take them to their page 
         return render_template("login.html") #Means we didn't click the submit button.
 
@@ -34,13 +35,17 @@ def user():
     if "user" in session: #If the user is logged in (there's a session?):
         user = session["user"] #Store the user in a variable.
         #Display it to the user.
-        return f"<h1>{user}</h1>" #Shows the user their name in a H1 tag.
+        return render_template("user.html", user=user)
     else: #If there's no session (no user).
+        flash("You Are Not Logged In!!")
         return redirect(url_for("login"))
 
 
 @app.route("/logout") #Takes them back to the login page.
 def logout():
+    if "user" in session:  # If the user is logged in (there's a session?):
+        user = session["user"]  # Store the user in a variable.
+        flash(f"{user} Logged Out Successfully", category="info")
     session.pop("user", None) #Removes session data.
     return redirect(url_for("login"))
 
