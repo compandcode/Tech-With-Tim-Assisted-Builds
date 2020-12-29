@@ -1,18 +1,6 @@
 from django.shortcuts import render
-from rest_framework import generics
-from .serializers import RoomSerializer
-from .models import Room
+from django.http import HttpResponse
 
-"""
-To Run, Type this in the terminal: 
-    cd music_controller
-    python .\manage.py runserver
-    Go to api/room .
-"""
-# Create your views here. (Endpoints).
-# Note: Both Functions and Classes can be used as views.
-
-#API View to view a list of all the different views.
-class RoomView(generics.ListAPIView): #Room to setup and return all the different Rooms. Change 'List' to 'Create' if you want to input. 
-    queryset = Room.objects.all() #Gets all the Room Objects.
-    serializer_class = RoomSerializer #Converts it to a better format.
+# Create your views here.
+def main(request):
+    return HttpResponse("<h1>Hello</h1>")
